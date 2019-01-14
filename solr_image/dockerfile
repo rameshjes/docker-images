@@ -1,0 +1,22 @@
+FROM tomcat:7.0
+
+ENTRYPOINT []
+RUN (mkdir -p solr4.5 && cd solr4.5 && wget http://archive.apache.org/dist/lucene/solr/4.5.0/solr-4.5.0.tgz)
+WORKDIR solr4.5
+RUN tar xvzf solr-4.5.0.tgz && cd solr-4.5.0
+
+RUN cp /usr/local/tomcat/solr4.5/solr-4.5.0/example/webapps/solr.war /usr/local/tomcat/solr4.5/solr-4.5.0/example/solr/solr.war 
+
+RUN cp -r /usr/local/tomcat/solr4.5/solr-4.5.0/example/lib/ext/* /usr/local/tomcat/lib
+
+RUN cp -r /usr/local/tomcat/solr4.5/solr-4.5.0/example/resources/log4j.properties /usr/local/tomcat/lib
+
+RUN sed -i 's+logs/+/usr/local/tomcat/solr4.5/solr-4.5.0+' /usr/local/tomcat/lib/log4j.properties
+
+COPY solr.xml /usr/local/tomcat/conf/Catalina/localhost/
+
+RUN sed -i 's+${jetty.port:8983}+8080+' /usr/local/tomcat/solr4.5/solr-4.5.0/example/solr/solr.xml
+
+
+EXPOSE 8080
+CMD ["catalina.sh", "run"]

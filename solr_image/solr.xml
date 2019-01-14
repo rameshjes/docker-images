@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context docBase="/usr/local/tomcat/solr4.5/solr-4.5.0/example/solr/solr.war" debug="0" crossContext="true">
+  <Environment name="solr/home" type="java.lang.String" value="/usr/local/tomcat/solr4.5/solr-4.5.0/example/multicore" override="true" />
+</Context>
